@@ -1,5 +1,9 @@
 // Re export everything to simplify imports
 
+// Alert
+export * from './alert';
+export * from './alert.validation';
+
 // Experimenter
 export * from './experimenter';
 
@@ -47,6 +51,8 @@ export * from './stages/profile_stage';
 export * from './stages/profile_stage.validation';
 export * from './stages/reveal_stage';
 export * from './stages/reveal_stage.validation';
+export * from './stages/salesperson_stage';
+export * from './stages/salesperson_stage.validation';
 export * from './stages/survey_stage';
 export * from './stages/survey_stage.prompts'
 export * from './stages/survey_stage.validation';

@@ -12,6 +12,7 @@ import {CSSResultGroup, html, nothing} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 
 import {core} from '../../core/core';
+import {AuthService} from '../../services/auth.service';
 import {CohortService} from '../../services/cohort.service';
 import {ExperimentService} from '../../services/experiment.service';
 import {ParticipantService} from '../../services/participant.service';
@@ -36,6 +37,7 @@ import {styles} from './chat_interface.scss';
 export class ChatInterface extends MobxLitElement {
   static override styles: CSSResultGroup = [styles];
 
+  private readonly authService = core.getService(AuthService);
   private readonly cohortService = core.getService(CohortService);
   private readonly experimentService = core.getService(ExperimentService);
   private readonly participantService = core.getService(ParticipantService);
@@ -48,6 +50,7 @@ export class ChatInterface extends MobxLitElement {
   @property() disableInput = false;
   @property() showInfo = false;
   @state() readyToEndDiscussionLoading = false;
+  @state() isAlertLoading = false;
 
   private sendUserInput() {
     if (!this.stage) return;
@@ -262,6 +265,12 @@ export class ChatInterface extends MobxLitElement {
         currentDiscussionId,
       );
 
+    const sendAlert = async () => {
+      this.isAlertLoading = true;
+      await this.participantService.sendAlertMessage('Stuck in chat stage!');
+      this.isAlertLoading = false;
+    };
+
     return html`
       <pr-tooltip
         text=${isDisabled
@@ -272,12 +281,25 @@ export class ChatInterface extends MobxLitElement {
         <pr-button
           color="tertiary"
           variant="tonal"
-          ?disabled=${isDisabled}
+          ?disabled=${this.authService.isExperimenter ? false : isDisabled}
           ?loading=${this.readyToEndDiscussionLoading}
           @click=${onClick}
         >
           Ready to end discussion
         </pr-button>
+      </pr-tooltip>
+      <pr-tooltip
+        position="TOP_END"
+        text="Click this to alert the experimenter if you have trouble ending discussion"
+      >
+        <pr-icon-button
+          icon="contact_support"
+          variant="default"
+          color="error"
+          ?loading=${this.isAlertLoading}
+          @click=${sendAlert}
+        >
+        </pr-icon-button>
       </pr-tooltip>
     `;
   }

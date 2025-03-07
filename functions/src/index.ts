@@ -11,6 +11,8 @@ export * from './participant.endpoints';
 export * from './participant.triggers';
 export * from './participant.utils';
 
+export * from './alert.endpoints';
+
 export * from './agent.endpoints';
 export * from './agent.utils';
 
@@ -24,6 +26,8 @@ export * from './stages/chip.utils';
 
 export * from './stages/ranking.endpoints';
 export * from './stages/ranking.utils';
+
+export * from './stages/salesperson.endpoints';
 
 export * from './stages/survey.endpoints';
 export * from './stages/survey.utils';

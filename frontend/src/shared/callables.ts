@@ -1,4 +1,5 @@
 import {
+  AckAlertMessageData,
   AgentConfigTestData,
   AgentParticipantPromptTestData,
   BaseParticipantData,
@@ -14,10 +15,14 @@ import {
   InitiateParticipantTransferData,
   ParticipantNextStageResponse,
   ParticipantProfile,
+  SendAlertMessageData,
   SendChipOfferData,
   SendChipResponseData,
   SendParticipantCheckData,
   SetChipTurnData,
+  SetSalespersonControllerData,
+  SetSalespersonMoveData,
+  SetSalespersonResponseData,
   SimpleResponse,
   SuccessResponse,
   UpdateChatAgentsData,
@@ -393,6 +398,48 @@ export const setChipTurnCallable = async (
   return data;
 };
 
+/** Generic endpoint for setting salesperson controller. */
+export const setSalespersonControllerCallable = async (
+  functions: Functions,
+  config: SetSalespersonControllerData,
+) => {
+  const {data} = await httpsCallable<
+    SetSalespersonControllerData,
+    SuccessResponse
+  >(
+    functions,
+    'setSalespersonController',
+  )(config);
+  return data;
+};
+
+/** Generic endpoint for setting salesperson move. */
+export const setSalespersonMoveCallable = async (
+  functions: Functions,
+  config: SetSalespersonMoveData,
+) => {
+  const {data} = await httpsCallable<SetSalespersonMoveData, SuccessResponse>(
+    functions,
+    'setSalespersonMove',
+  )(config);
+  return data;
+};
+
+/** Generic endpoint for setting salesperson response. */
+export const setSalespersonResponseCallable = async (
+  functions: Functions,
+  config: SetSalespersonResponseData,
+) => {
+  const {data} = await httpsCallable<
+    SetSalespersonResponseData,
+    SuccessResponse
+  >(
+    functions,
+    'setSalespersonResponse',
+  )(config);
+  return data;
+};
+
 /** Generic endpoint for testing agent participant stage prompts. */
 export const testAgentParticipantPromptCallable = async (
   functions: Functions,
@@ -419,6 +466,36 @@ export const testAgentConfigCallable = async (
   >(
     functions,
     'testAgentConfig',
+  )(config);
+  return data;
+};
+
+/** Generic endpoint for sending alert message. */
+export const sendAlertMessageCallable = async (
+  functions: Functions,
+  config: SendAlertMessageData,
+) => {
+  const {data} = await httpsCallable<
+    SendAlertMessageData,
+    SimpleResponse<string>
+  >(
+    functions,
+    'sendAlertMessage',
+  )(config);
+  return data;
+};
+
+/** Generic endpoint for acknowledging alert message. */
+export const ackAlertMessageCallable = async (
+  functions: Functions,
+  config: AckAlertMessageData,
+) => {
+  const {data} = await httpsCallable<
+    AckAlertMessageData,
+    SimpleResponse<string>
+  >(
+    functions,
+    'ackAlertMessage',
   )(config);
   return data;
 };
